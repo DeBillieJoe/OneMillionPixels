@@ -34,6 +34,7 @@ namespace OneMillionPixels.Controllers
 
         private Bitmap GetBitmap()
         {
+            //
             Bitmap bitmap = new Bitmap(1000, 1000);
 
             for (int x = 0; x < 1000; x++)
