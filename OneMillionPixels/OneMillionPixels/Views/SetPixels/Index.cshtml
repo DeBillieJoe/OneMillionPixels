@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Set pixels";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+
+<canvas id="myCanvas" width="1000" height="1000"
+style="border:1px solid #000000;">
+</canvas>
+
+<script type="text/javascript">
+
+    function drawPixel(x, y) {
+        var canvas = $('#canvas');
+        var ctx = canvas[0].getContext("2d");
+
+        ctx.fillStyle = 'Green';
+        ctx.fillRect(0,0,200,200);
+    }
+
+</script>
