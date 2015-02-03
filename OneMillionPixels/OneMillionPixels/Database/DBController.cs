@@ -21,12 +21,9 @@ namespace OneMillionPixels.Database
             conn.Close();
         }
 
-        public void TestCommand()
+        public SqlCeCommand CreateCommand()
         {
-            SqlCeCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "INSERT INTO Customers ([Customer ID], [Company Name]) Values('NWIND', 'Northwind Traders')";
-
-            cmd.ExecuteNonQuery();
+            return conn.CreateCommand();
         }
     }
 }
