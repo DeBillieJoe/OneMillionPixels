@@ -8,7 +8,7 @@ namespace OneMillionPixels.Database
 {
     public class Picture
     {
-        public string ID { get; private set; }
+        public string ID { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public int Width { get; set; }
@@ -16,13 +16,11 @@ namespace OneMillionPixels.Database
         public string Link { get; set; }
         public byte[] Data { get; set; }
 
-        public Picture()
-        {
-            ID = System.Guid.NewGuid().ToString("N");
-        }
-
         public void SaveNew()
         {
+            if (string.IsNullOrEmpty(ID))
+                ID = System.Guid.NewGuid().ToString("N");
+
             using (DBController dbu = new DBController())
             {
                 var command = dbu.CreateCommand();
@@ -45,6 +43,33 @@ namespace OneMillionPixels.Database
                 if (rowsEffected == 0)
                     throw new Exception("This place is already taken.");
             }
+        }
+
+        public static List<Picture> RetrieveAll()
+        {
+            List<Picture> pictures = new List<Picture>();
+
+            using (DBController dbu = new DBController())
+            {
+                var command = dbu.CreateCommand();
+                command.CommandText = @"SELECT ID, X, Y, Width, Height, Link, Data FROM Pictures";
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Picture picture = new Picture();
+                    picture.ID = (string)reader["ID"];
+                    picture.X = (int)reader["X"];
+                    picture.Y = (int)reader["Y"];
+                    picture.Width = (int)reader["Width"];
+                    picture.Height = (int)reader["Height"];
+                    picture.Link = (string)reader["Link"];
+                    picture.Data = (byte[])reader["Data"];
+                    pictures.Add(picture);
+                }
+            }
+
+            return pictures;
         }
     }
 }
