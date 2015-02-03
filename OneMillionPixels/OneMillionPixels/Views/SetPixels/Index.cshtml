@@ -1,25 +1,28 @@
-﻿@{
+﻿@model OneMillionPixels.Models.UploadImage
+@{
     ViewBag.Title = "Set pixels";
 }
 
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>@ViewBag.Message</h2>
+    <h1>@ViewBag.Title</h1>
 </hgroup>
 
+@Html.LabelFor(x => x.Image)
+@Html.TextBoxFor(x => x.Image, new { type= "file" })
 
-<canvas id="myCanvas" width="1000" height="1000"
-style="border:1px solid #000000;">
+<canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #000000;">
 </canvas>
 
 <script type="text/javascript">
 
     function drawPixel(x, y) {
-        var canvas = $('#canvas');
+        var canvas = $('#myCanvas');
         var ctx = canvas[0].getContext("2d");
 
         ctx.fillStyle = 'Green';
-        ctx.fillRect(0,0,200,200);
+        ctx.fillRect(x,y,200,200);
     }
+
+
 
 </script>

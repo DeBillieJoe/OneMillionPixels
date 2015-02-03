@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OneMillionPixels.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,8 +11,10 @@ namespace OneMillionPixels.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            UploadImage model = new UploadImage();
+            return View(model);
         }
+
 
     }
 }
