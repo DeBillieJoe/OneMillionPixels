@@ -6,21 +6,53 @@
 <hgroup class="title">
     <h1>@ViewBag.Title</h1>
 </hgroup>
+@using (Html.BeginForm())
+{
+    @ValidationSumm
+    @Html.LabelFor(x => x.Image)
+    @Html.TextBoxFor(x => x.Image, new { type = "file" })
+    @Html.ValidationMessageFor(x => x.Image)
 
-@Html.LabelFor(x => x.Image)
-@Html.TextBoxFor(x => x.Image, new { type= "file" })
+    @Html.LabelFor(x => x.XCoordinates)
+    @Html.TextBoxFor(x => x.XCoordinates)
+    @Html.ValidationMessageFor(x => x.XCoordinates)
 
-<canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #000000;">
-</canvas>
+    @Html.LabelFor(x => x.YCoordinates)
+    @Html.TextBoxFor(x => x.YCoordinates)
+    @Html.ValidationMessageFor(x => x.YCoordinates)
+    
+    @Html.LabelFor(x => x.Link)
+    @Html.TextBoxFor(x => x.Link)
+    @Html.ValidationMessageFor(x => x.Link)
+    <button type="submit" id="uploadImage">Upload</button>
+}
+@*<canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #000000;">
+    </canvas>*@
 
 <script type="text/javascript">
+    $(function () 
+        
+        $("#uploadImage").click(function (e) {
+            var ser = JSON.parse('@Html.Raw(Model)')
+            e.preventDefault();
+
+            $.ajax({
+                url: @Url.Action("Upload"),
+                type: POST,
+                data: ser,
+                success: function (result) {
+                    alert("bla");
+                }
+            })
+        });
+    });
 
     function drawPixel(x, y) {
         var canvas = $('#myCanvas');
         var ctx = canvas[0].getContext("2d");
 
         ctx.fillStyle = 'Green';
-        ctx.fillRect(x,y,200,200);
+        ctx.fillRect(x, y, 200, 200);
     }
 
 

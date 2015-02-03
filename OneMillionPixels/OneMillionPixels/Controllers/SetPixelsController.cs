@@ -15,6 +15,13 @@ namespace OneMillionPixels.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult Upload(UploadImage image)
+        {
+            
+
+            return View("Index");
+        }
 
     }
 }
