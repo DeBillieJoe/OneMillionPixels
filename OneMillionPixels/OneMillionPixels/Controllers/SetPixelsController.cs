@@ -24,7 +24,7 @@ namespace OneMillionPixels.Controllers
                 db.Data = reader.ReadBytes(image.ContentLength);
             }
 
-            return View("StepTwo");
+            return View("StepTwo"); 
         }
 
     }
