@@ -500,6 +500,7 @@ textarea {
 .field-validation-error {
     color: #e80c4d;
     font-weight: bold;
+    display: block;
 }
 
 .field-validation-valid {
@@ -518,6 +519,7 @@ input[type="checkbox"].input-validation-error {
     color: #e80c4d;
     font-weight: bold;
     font-size: 1.1em;
+    display: none;
 }
 
 .validation-summary-valid {
@@ -753,4 +755,8 @@ tr.pager td {
         footer p {
             margin: 0;
         }
+}
+
+#uploadImage {
+    display:block;
 }

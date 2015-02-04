@@ -1,0 +1,33 @@
+﻿@model OneMillionPixels.Models.UploadImageStepOne
+@{
+    ViewBag.Title = "Set pixels";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+@using (Html.BeginForm("Upload", "SetPixels", FormMethod.Post, new { enctype = "multipart/form-data"}))
+{
+    @Html.ValidationSummary();
+    
+    @Html.LabelFor(x => x.Image)
+    @Html.TextBoxFor(x => x.Image, new { type = "file", name = "files" })
+    @Html.ValidationMessageFor(x => x.Image)
+
+    <input type="submit" value="Upload" name="upload" id="submitMe" />
+
+   @* @Html.LabelFor(x => x.XCoordinates)
+    @Html.TextBoxFor(x => x.XCoordinates)
+    @Html.ValidationMessageFor(x => x.XCoordinates)
+
+    @Html.LabelFor(x => x.YCoordinates)
+    @Html.TextBoxFor(x => x.YCoordinates)
+    @Html.ValidationMessageFor(x => x.YCoordinates)
+    
+    @Html.LabelFor(x => x.Link) 
+    @Html.TextBoxFor(x => x.Link)
+    @Html.ValidationMessageFor(x => x.Link)*@
+    @*<button type="button" id="uploadImage">Upload</button>*@
+}
+@*<canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #000000;">
+    </canvas>*@ 

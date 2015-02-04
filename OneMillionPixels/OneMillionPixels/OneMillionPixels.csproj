@@ -192,7 +192,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\UploadImage.cs" />
+    <Compile Include="Models\UploadImageStepOne.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -301,13 +301,17 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\SetPixels\Index.cshtml" />
+    <Content Include="Views\SetPixels\StepOne.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\BuyPixels.cshtml" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js.map">
+      <DependentUpon>jquery.validate.unobtrusive.js</DependentUpon>
+    </Content>
+    <Content Include="Views\SetPixels\StepTwo.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
