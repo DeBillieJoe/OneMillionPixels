@@ -192,6 +192,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\ImageBanner.cs" />
+    <Compile Include="Models\UploadImage.cs" />
     <Compile Include="Models\UploadImageStepOne.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -313,7 +315,16 @@
     </Content>
     <Content Include="Views\SetPixels\StepTwo.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{b1cd4e79-bc3a-4822-9b9d-b0b7cc63b732}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{bd4305c3-38f7-4d22-863a-e9ad0761096d}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

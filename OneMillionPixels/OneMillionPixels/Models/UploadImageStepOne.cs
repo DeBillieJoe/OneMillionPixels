@@ -8,6 +8,11 @@ namespace OneMillionPixels.Models
 {
     public class UploadImageStepOne
     {
+        public UploadImageStepOne()
+        {
+            Images = new List<ImageBanner>();
+        }
+
         [Required(ErrorMessage="Моля, изберете изображение")]
         [Display(Name="Избор на изображение")]
         public HttpPostedFileBase Image { get; set; }
@@ -27,11 +32,5 @@ namespace OneMillionPixels.Models
         public List<ImageBanner> Images { get; set; }
     }
 
-    public class ImageBanner
-    {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public string Link { get; set; }
-        public byte[] BinaryContent { get; set; }
-    }
+
 }

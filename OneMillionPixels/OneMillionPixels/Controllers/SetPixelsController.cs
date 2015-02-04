@@ -1,6 +1,10 @@
-﻿using OneMillionPixels.Models;
+﻿using Models;
+using OneMillionPixels.Database;
+using OneMillionPixels.Models;
+using Services;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -14,10 +18,27 @@ namespace OneMillionPixels.Controllers
         public ActionResult Index()
         {
             UploadImageStepOne model = new UploadImageStepOne();
-            model.Images = new List<ImageBanner>();
-            OneMillionPixels.Database.Picture db = new Database.Picture();
-            var images = OneMillionPixels.Database.Picture.RetrieveAll();
+            ImageManager mngr = new ImageManager();
+            //var images = mngr.RetrieveAllImages();
 
+            //mapSavedPicturesToImageBanners(images, model.Images);
+
+            return View("StepOne", model);
+        }
+
+        public ActionResult Upload(UploadImageStepOne model)
+        {
+            Picture picture = new Picture();
+            mapUploadedImageToPicture(model, picture);
+
+            ImageManager mngr = new ImageManager();
+            mngr.SaveNewImage(picture);
+
+            return View("StepTwo"); 
+        }
+
+        void mapSavedPicturesToImageBanners(List<Picture> images, List<ImageBanner> banners)
+        {
             foreach (var image in images)
             {
                 ImageBanner banner = new ImageBanner();
@@ -26,27 +47,23 @@ namespace OneMillionPixels.Controllers
                 banner.Link = image.Link;
                 banner.BinaryContent = image.Data;
 
-                model.Images.Add(banner);
+                banners.Add(banner);
             }
-
-            return View("StepOne", model);
         }
 
-        public ActionResult Upload(UploadImageStepOne model)
+        void mapUploadedImageToPicture(UploadImageStepOne model, Picture picture)
         {
-            OneMillionPixels.Database.Picture db = new Database.Picture();
-            db.X = model.XCoordinates.Value;
-            db.Y = model.YCoordinates.Value;
-            db.Link = model.Link;
-            db.Width = 100;
-            db.Height = 100;
+            var image = Image.FromStream(model.Image.InputStream, true, true);
+            picture.X = model.XCoordinates.Value;
+            picture.Y = model.YCoordinates.Value;
+            picture.Link = model.Link;
+            picture.Width = image.Width;
+            picture.Height = image.Height;
+            
             using (BinaryReader reader = new BinaryReader(model.Image.InputStream))
             {
-                db.Data = reader.ReadBytes(model.Image.ContentLength);
+                picture.Data = reader.ReadBytes(model.Image.ContentLength);
             }
-            db.SaveNew();
-            return View("StepTwo"); 
         }
-
     }
 }

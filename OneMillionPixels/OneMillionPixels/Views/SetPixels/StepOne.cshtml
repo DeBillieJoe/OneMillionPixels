@@ -17,11 +17,11 @@
     
 
     @Html.LabelFor(x => x.XCoordinates)
-    @Html.TextBoxFor(x => x.XCoordinates)
+    @Html.TextBoxFor(x => x.XCoordinates, new { id = "xCoordinate"})
     @Html.ValidationMessageFor(x => x.XCoordinates)
 
     @Html.LabelFor(x => x.YCoordinates)
-    @Html.TextBoxFor(x => x.YCoordinates)
+    @Html.TextBoxFor(x => x.YCoordinates, new { id = "yCoordinate" })
     @Html.ValidationMessageFor(x => x.YCoordinates)
     
     @Html.LabelFor(x => x.Link) 
@@ -40,20 +40,35 @@
 <canvas id="myCanvas" width="1000" height="1000" style="border: 1px solid #000000;"></canvas>
 
 <script type="text/javascript">
-    $(function () {
+    function drawImages() {
         var images = $("img");
         var ctx = $("#myCanvas")[0].getContext('2d');
         images.each(function () {
             var currentImage = $(this)[0];
             var img = new Image();
-            img.onload = function() {
-                
+            img.onload = function () {
+
                 ctx.drawImage(img, currentImage.getAttribute("X"), currentImage.getAttribute("Y"));
             }
             img.src = currentImage.getAttribute("src");
         });
         images.each(function () {
             $(this).remove();
+        });
+    }
+
+    $(function () {
+        drawImages();
+
+        var canvas = $("#myCanvas");
+        canvas.click(function (e) {
+            e.preventDefault();
+            var pos = canvas.position();
+            var x = (e.pageX - pos.left)/5 | 0;
+            var y = (e.pageY - pos.top) / 5 | 0;
+
+            $("#yCoordinate").val(y);
+            $("#xCoordinate").val(x);
         });
     })
 </script>
