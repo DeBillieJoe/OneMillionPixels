@@ -14,9 +14,9 @@
     @Html.TextBoxFor(x => x.Image, new { type = "file", name = "files" })
     @Html.ValidationMessageFor(x => x.Image)
 
-    <input type="submit" value="Upload" name="upload" id="submitMe" />
+    
 
-   @* @Html.LabelFor(x => x.XCoordinates)
+    @Html.LabelFor(x => x.XCoordinates)
     @Html.TextBoxFor(x => x.XCoordinates)
     @Html.ValidationMessageFor(x => x.XCoordinates)
 
@@ -26,8 +26,34 @@
     
     @Html.LabelFor(x => x.Link) 
     @Html.TextBoxFor(x => x.Link)
-    @Html.ValidationMessageFor(x => x.Link)*@
-    @*<button type="button" id="uploadImage">Upload</button>*@
+    @Html.ValidationMessageFor(x => x.Link)
+    <input type="submit" value="Upload" name="upload" id="uploadImage" />
 }
-@*<canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #000000;">
-    </canvas>*@ 
+@{
+    foreach (var image in Model.Images)
+	{   
+        string src = "data:image/png;base64," + Convert.ToBase64String(image.BinaryContent);
+        
+		<img src="@src" style="display: none" X="@image.X" Y="@image.Y"/>
+	}
+}
+<canvas id="myCanvas" width="1000" height="1000" style="border: 1px solid #000000;"></canvas>
+
+<script type="text/javascript">
+    $(function () {
+        var images = $("img");
+        var ctx = $("#myCanvas")[0].getContext('2d');
+        images.each(function () {
+            var currentImage = $(this)[0];
+            var img = new Image();
+            img.onload = function() {
+                
+                ctx.drawImage(img, currentImage.getAttribute("X"), currentImage.getAttribute("Y"));
+            }
+            img.src = currentImage.getAttribute("src");
+        });
+        images.each(function () {
+            $(this).remove();
+        });
+    })
+</script>
