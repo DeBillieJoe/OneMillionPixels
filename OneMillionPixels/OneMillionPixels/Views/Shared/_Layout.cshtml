@@ -25,7 +25,8 @@
                             <li/>
                             @if (Request.IsAuthenticated) {
                                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                                <li>@Html.ActionLink("Set pixels", "Index", "SetPixels")</li>
+                                <li>@Html.ActionLink("Buy", "Index", "SetPixels")</li>
+                                <li>@Html.ActionLink("Edit", "Edit", "SetPixels")</li>
                             }
                         </ul>
                     </nav>

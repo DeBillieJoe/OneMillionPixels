@@ -25,11 +25,17 @@ namespace OneMillionPixels.Controllers
         public ActionResult StepTwo(UploadImageStepOne model)
         {
             UploadImageStepTwo stepTwoModel = new UploadImageStepTwo();
-            
-            ImageManager mngr = new ImageManager();
-            var images = mngr.RetrieveAllImages();
+            try
+            {
+                ImageManager mngr = new ImageManager();
+                var images = mngr.RetrieveAllImages();
 
-            mapSavedPicturesToImageBanners(images, stepTwoModel.Images);
+                mapSavedPicturesToImageBanners(images, stepTwoModel.Images);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", ex);
+            }
 
             var image = Image.FromStream(model.Image.InputStream, true, true);
             stepTwoModel.Width = image.Width;
@@ -46,10 +52,17 @@ namespace OneMillionPixels.Controllers
         {
             ImageManager mngr = new ImageManager();
             Picture pic = new Picture();
-            mapUploadedImageToPicture(model, pic);
 
-            mngr.SaveNewImage(pic);
+            try
+            {
+                mapUploadedImageToPicture(model, pic);
 
+                mngr.SaveNewImage(pic);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", ex);
+            }
 
             UploadImageSuccess success = new UploadImageSuccess();
             success.Price = model.Width * model.Height;
