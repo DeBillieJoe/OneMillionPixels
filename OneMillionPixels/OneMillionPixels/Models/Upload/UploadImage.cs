@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace OneMillionPixels.Models
+namespace OneMillionPixels.Models.Upload
 {
 	public class UploadImage
 	{

@@ -29,5 +29,13 @@ namespace Services
                 return ctrl.RetrieveAll();
             }
         }
+
+        public List<Picture> RetrieveAllImages(string userID)
+        {
+            using (PictureDBController ctrl = new PictureDBController())
+            {
+                return ctrl.RetrieveAll(userID);
+            }
+        }
     }
 }

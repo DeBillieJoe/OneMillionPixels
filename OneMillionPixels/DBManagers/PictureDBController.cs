@@ -16,7 +16,7 @@ namespace DBManagers
                 obj.ID = System.Guid.NewGuid().ToString("N");
 
             var command = this.CreateCommand();
-            command.CommandText = @"UPDATE Pictures SET Data = @param1, Link = @param2, ContentYpe = @param5 WHERE ID = @param3 AND Username = @param4";
+            command.CommandText = @"UPDATE Pictures SET Data = @param1, Link = @param2, ContentType = @param5 WHERE ID = @param3 AND Username = @param4";
             command.Parameters.Add("@param1", SqlDbType.Image).Value = obj.Data;
             command.Parameters.Add("@param2", SqlDbType.NText).Value = obj.Link;
             command.Parameters.Add("@param3", SqlDbType.NVarChar).Value = obj.ID;
@@ -74,7 +74,7 @@ namespace DBManagers
             if (!string.IsNullOrEmpty(user))
             {
                 command.CommandText += " WHERE Username = @param1";
-                command.Parameters.Add("@param8", SqlDbType.NVarChar).Value = user;
+                command.Parameters.Add("@param1", SqlDbType.NVarChar).Value = user;
             }
 
             var reader = command.ExecuteReader();

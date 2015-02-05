@@ -191,11 +191,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Edit\EditStepTwo.cs" />
+    <Compile Include="Models\Edit\EditStepOne.cs" />
     <Compile Include="Models\ImageBanner.cs" />
-    <Compile Include="Models\UploadImage.cs" />
-    <Compile Include="Models\UploadImageStepOne.cs" />
-    <Compile Include="Models\UploadImageStepTwo.cs" />
-    <Compile Include="Models\UploadImageSuccess.cs" />
+    <Compile Include="Models\Upload\UploadImage.cs" />
+    <Compile Include="Models\Upload\UploadImageStepOne.cs" />
+    <Compile Include="Models\Upload\UploadImageStepTwo.cs" />
+    <Compile Include="Models\Upload\UploadImageSuccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +310,9 @@
     </Content>
     <Content Include="Views\SetPixels\StepTwo.cshtml" />
     <Content Include="Views\SetPixels\Upload.cshtml" />
+    <Content Include="Views\SetPixels\Edit.cshtml" />
+    <Content Include="Views\SetPixels\EditStepTwo.cshtml" />
+    <Content Include="Views\SetPixels\EditSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

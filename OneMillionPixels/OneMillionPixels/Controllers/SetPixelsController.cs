@@ -1,6 +1,8 @@
 ﻿using Models;
 using OneMillionPixels.Database;
 using OneMillionPixels.Models;
+using OneMillionPixels.Models.Edit;
+using OneMillionPixels.Models.Upload;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -69,15 +71,69 @@ namespace OneMillionPixels.Controllers
 
             return View(success);
         }
+
+        public ActionResult Edit()
+        {
+            EditStepOne model = new EditStepOne();
+            try
+            {
+                ImageManager mngr = new ImageManager();
+                var images = mngr.RetrieveAllImages(User.Identity.Name);
+
+                mapSavedPicturesToImageBanners(images, model.Images);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", ex);
+            }
+
+            return View(model);
+        }
+
+        public ActionResult EditStepTwo(string id)
+        {
+            EditStepTwo model = new EditStepTwo();
+            model.ID = id;
+    
+            return View(model);
+        }
+
+        public ActionResult Save(EditStepTwo model)
+        {
+            ImageManager mngr = new ImageManager();
+            Picture pic = new Picture();
+
+            try
+            {
+                pic.ID = model.ID;
+                pic.Link = model.Link;
+                using (BinaryReader reader = new BinaryReader(model.Image.InputStream))
+                {
+                    pic.Data = reader.ReadBytes(model.Image.ContentLength);
+                }
+                pic.ContentType = model.Image.ContentType;
+                pic.User = User.Identity.Name;
+                mngr.Save(pic);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", ex);
+            }
+
+            return View("EditSuccess");
+        }
+
         void mapSavedPicturesToImageBanners(List<Picture> images, List<ImageBanner> banners)
         {
             foreach (var image in images)
             {
                 ImageBanner banner = new ImageBanner();
+                banner.ID = image.ID;
                 banner.X = image.X;
                 banner.Y = image.Y;
                 banner.Link = image.Link;
                 banner.BinaryContent = image.Data;
+                banner.ContentType = image.ContentType;
 
                 banners.Add(banner);
             }
