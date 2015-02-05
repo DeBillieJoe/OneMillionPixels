@@ -6,12 +6,12 @@
 <hgroup class="title">
     <h1>@ViewBag.Title</h1>
 </hgroup>
-@using (Html.BeginForm("StepTwo", "SetPixels", FormMethod.Post, new { enctype = "multipart/form-data"}))
+@using (Html.BeginForm("Upload", "SetPixels", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary();
     
     @Html.LabelFor(x => x.XCoordinates)
-    @Html.TextBoxFor(x => x.XCoordinates, new { id = "xCoordinate", @readonly = "readonly"})
+    @Html.TextBoxFor(x => x.XCoordinates, new { id = "xCoordinate", @readonly = "readonly" })
     @Html.ValidationMessageFor(x => x.XCoordinates)
 
     @Html.LabelFor(x => x.YCoordinates)
@@ -21,15 +21,21 @@
     @Html.LabelFor(x => x.Link) 
     @Html.TextBoxFor(x => x.Link)
     @Html.ValidationMessageFor(x => x.Link)
-    <input type="submit" value="Next" name="upload" id="uploadImage" />
+
+    @Html.HiddenFor(x => x.Width)
+    @Html.HiddenFor(x => x.Height)
+    @Html.HiddenFor(x => x.ContentType)
+    @Html.HiddenFor(x => x.BinaryContent)
+    <input type="submit" value="Finish" name="upload" id="uploadImage" />
 }
 @{
     foreach (var image in Model.Images)
-	{   
+    {
         string src = "data:image/png;base64," + Convert.ToBase64String(image.BinaryContent);
-        
-		<img src="@src" style="display: none" X="@image.X" Y="@image.Y" class="preview"/>
-	}
+        <a href="@image.Link">
+            <img src="@src" style="display: none" X="@image.X" Y="@image.Y" class="preview"/>
+        </a>
+    }
 }
 
 @{
@@ -41,7 +47,7 @@
     <img src="@srcUploaded" />
 </div>
 
-<canvas id="myCanvas" width="1002" height="1002" style="border: 1px solid #000000;"></canvas>
+<canvas id="myCanvas" width="1000" height="1000" style="border: 1px solid #000000;"></canvas>
 
 
 <script type="text/javascript">
@@ -72,8 +78,8 @@
         if (divPos.top >= pos.top && divPos.top < (pos.top + 1000) - height &&
             divPos.left >= pos.left && divPos.left < (pos.left + 1000) - width) {
             divPos = element.position();
-            $("#yCoordinate").val(divPos.top - pos.top);
-            $("#xCoordinate").val(divPos.left - pos.left);
+            $("#yCoordinate").val(parseInt(divPos.top - pos.top));
+            $("#xCoordinate").val(parseInt(divPos.left - pos.left));
         }
         else {
             $("#yCoordinate").val("");
