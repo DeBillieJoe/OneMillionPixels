@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
+using System.Data.SqlServerCe;
 
 namespace DBManagers
 {
     public class DBControllerBase : IDisposable
     {
-        SqlConnection conn = null;
+        SqlCeConnection conn = null;
 
         public DBControllerBase()
         {
-            conn = new SqlConnection(System.Configuration.ConfigurationManager.AppSettings["ConnectionString"]);
+            conn = new SqlCeConnection(System.Configuration.ConfigurationManager.AppSettings["ConnectionString"]);
             conn.Open();
         }
 
@@ -22,7 +22,7 @@ namespace DBManagers
             conn.Close();
         }
 
-        public SqlCommand CreateCommand()
+        public SqlCeCommand CreateCommand()
         {
             return conn.CreateCommand();    
         }
