@@ -13,16 +13,18 @@ namespace Services
     {
         public void SaveNewImage(Picture image)
         {
-            PictureDBController ctrl = new PictureDBController();
-            ctrl.SaveNew(image);
+            using (PictureDBController ctrl = new PictureDBController())
+            {
+                ctrl.SaveNew(image);
+            }
         }
  
         public List<Picture> RetrieveAllImages()
         {
-            PictureDBController ctrl = new PictureDBController();
-            var images = ctrl.RetrieveAll();
-
-            return images;
+            using (PictureDBController ctrl = new PictureDBController())
+            {
+                return ctrl.RetrieveAll();
+            }
         }
     }
 }
