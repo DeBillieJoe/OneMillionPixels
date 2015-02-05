@@ -15,5 +15,6 @@ namespace Models
         public int Height { get; set; }
         public string Link { get; set; }
         public byte[] Data { get; set; }
+        public string User { get; set; }
     }
 }

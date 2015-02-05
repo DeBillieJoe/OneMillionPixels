@@ -59,7 +59,7 @@ namespace OneMillionPixels.Controllers
             picture.Link = model.Link;
             picture.Width = image.Width;
             picture.Height = image.Height;
-            
+            picture.User = User.Identity.Name;
             using (BinaryReader reader = new BinaryReader(model.Image.InputStream))
             {
                 picture.Data = reader.ReadBytes(model.Image.ContentLength);
