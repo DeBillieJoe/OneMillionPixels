@@ -19,9 +19,9 @@ namespace OneMillionPixels.Controllers
         {
             UploadImageStepOne model = new UploadImageStepOne();
             ImageManager mngr = new ImageManager();
-            //var images = mngr.RetrieveAllImages();
+            var images = mngr.RetrieveAllImages();
 
-            //mapSavedPicturesToImageBanners(images, model.Images);
+            mapSavedPicturesToImageBanners(images, model.Images);
 
             return View("StepOne", model);
         }
@@ -54,16 +54,16 @@ namespace OneMillionPixels.Controllers
         void mapUploadedImageToPicture(UploadImageStepOne model, Picture picture)
         {
             var image = Image.FromStream(model.Image.InputStream, true, true);
+
             picture.X = model.XCoordinates.Value;
             picture.Y = model.YCoordinates.Value;
             picture.Link = model.Link;
             picture.Width = image.Width;
             picture.Height = image.Height;
             picture.User = User.Identity.Name;
-            using (BinaryReader reader = new BinaryReader(model.Image.InputStream))
-            {
-                picture.Data = reader.ReadBytes(model.Image.ContentLength);
-            }
+
+            ImageConverter converter = new ImageConverter();
+            picture.Data = (byte[])converter.ConvertTo(image, typeof(byte[]));
         }
     }
 }
