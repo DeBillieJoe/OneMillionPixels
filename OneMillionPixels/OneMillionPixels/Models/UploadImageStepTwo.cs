@@ -25,5 +25,10 @@ namespace OneMillionPixels.Models
         public string Link { get; set; }
 
         public List<ImageBanner> Images { get; set; }
+
+        public byte[] BinaryContent { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+         
     }
 }   
