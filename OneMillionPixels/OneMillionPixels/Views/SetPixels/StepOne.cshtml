@@ -6,7 +6,7 @@
 <hgroup class="title">
     <h1>@ViewBag.Title</h1>
 </hgroup>
-@using (Html.BeginForm("Upload", "SetPixels", FormMethod.Post, new { enctype = "multipart/form-data"}))
+@using (Html.BeginForm("StepTwo", "SetPixels", FormMethod.Post, new { enctype = "multipart/form-data"}))
 {
     @Html.ValidationSummary();
     
@@ -16,7 +16,7 @@
 
     
 
-    @Html.LabelFor(x => x.XCoordinates)
+   @* @Html.LabelFor(x => x.XCoordinates)
     @Html.TextBoxFor(x => x.XCoordinates, new { id = "xCoordinate"})
     @Html.ValidationMessageFor(x => x.XCoordinates)
 
@@ -27,9 +27,10 @@
     @Html.LabelFor(x => x.Link) 
     @Html.TextBoxFor(x => x.Link)
     @Html.ValidationMessageFor(x => x.Link)
-    <input type="submit" value="Upload" name="upload" id="uploadImage" />
+    *@<input type="submit" value="Next" name="upload" id="uploadImage" />
 }
-@{
+
+@*@{
     foreach (var image in Model.Images)
 	{   
         string src = "data:image/png;base64," + Convert.ToBase64String(image.BinaryContent);
@@ -71,4 +72,4 @@
             $("#xCoordinate").val(x);
         });
     })
-</script>
+</script>*@

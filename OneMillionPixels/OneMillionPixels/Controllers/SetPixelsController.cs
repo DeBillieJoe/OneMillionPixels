@@ -17,24 +17,21 @@ namespace OneMillionPixels.Controllers
     {
         public ActionResult Index()
         {
-            UploadImageStepOne model = new UploadImageStepOne();
+            UploadImageStepOne stepOneModel = new UploadImageStepOne();
+
+            return View("StepOne", stepOneModel);
+        }
+
+        public ActionResult StepTwo(UploadImageStepOne model)
+        {
+            UploadImageStepTwo stepTwoModel = new UploadImageStepTwo();
+
             ImageManager mngr = new ImageManager();
             var images = mngr.RetrieveAllImages();
 
-            mapSavedPicturesToImageBanners(images, model.Images);
+            mapSavedPicturesToImageBanners(images, stepTwoModel.Images);
 
-            return View("StepOne", model);
-        }
-
-        public ActionResult Upload(UploadImageStepOne model)
-        {
-            Picture picture = new Picture();
-            mapUploadedImageToPicture(model, picture);
-
-            ImageManager mngr = new ImageManager();
-            mngr.SaveNewImage(picture);
-
-            return View("StepTwo"); 
+            return View("StepTwo", stepTwoModel); 
         }
 
         void mapSavedPicturesToImageBanners(List<Picture> images, List<ImageBanner> banners)
@@ -55,12 +52,12 @@ namespace OneMillionPixels.Controllers
         {
             var image = Image.FromStream(model.Image.InputStream, true, true);
 
-            picture.X = model.XCoordinates.Value;
-            picture.Y = model.YCoordinates.Value;
-            picture.Link = model.Link;
-            picture.Width = image.Width;
-            picture.Height = image.Height;
-            picture.User = User.Identity.Name;
+            //picture.X = model.XCoordinates.Value;
+            //picture.Y = model.YCoordinates.Value;
+            //picture.Link = model.Link;
+            //picture.Width = image.Width;
+            //picture.Height = image.Height;
+            //picture.User = User.Identity.Name;
 
             ImageConverter converter = new ImageConverter();
             picture.Data = (byte[])converter.ConvertTo(image, typeof(byte[]));

@@ -195,6 +195,7 @@
     <Compile Include="Models\ImageBanner.cs" />
     <Compile Include="Models\UploadImage.cs" />
     <Compile Include="Models\UploadImageStepOne.cs" />
+    <Compile Include="Models\UploadImageStepTwo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
