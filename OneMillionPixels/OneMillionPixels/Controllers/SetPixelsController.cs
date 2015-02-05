@@ -25,15 +25,37 @@ namespace OneMillionPixels.Controllers
         public ActionResult StepTwo(UploadImageStepOne model)
         {
             UploadImageStepTwo stepTwoModel = new UploadImageStepTwo();
-
+            
             ImageManager mngr = new ImageManager();
             var images = mngr.RetrieveAllImages();
 
             mapSavedPicturesToImageBanners(images, stepTwoModel.Images);
 
+            var image = Image.FromStream(model.Image.InputStream, true, true);
+            stepTwoModel.Width = image.Width;
+            stepTwoModel.Height = image.Height;
+            stepTwoModel.ContentType = model.Image.ContentType;
+
+            ImageConverter converter = new ImageConverter();
+            stepTwoModel.BinaryContent = (byte[])converter.ConvertTo(image, typeof(byte[]));
+
             return View("StepTwo", stepTwoModel); 
         }
 
+        public ActionResult Upload(UploadImageStepTwo model)
+        {
+            ImageManager mngr = new ImageManager();
+            Picture pic = new Picture();
+            mapUploadedImageToPicture(model, pic);
+
+            mngr.SaveNewImage(pic);
+
+
+            UploadImageSuccess success = new UploadImageSuccess();
+            success.Price = model.Width * model.Height;
+
+            return View(success);
+        }
         void mapSavedPicturesToImageBanners(List<Picture> images, List<ImageBanner> banners)
         {
             foreach (var image in images)
@@ -48,19 +70,16 @@ namespace OneMillionPixels.Controllers
             }
         }
 
-        void mapUploadedImageToPicture(UploadImageStepOne model, Picture picture)
+        void mapUploadedImageToPicture(UploadImageStepTwo model, Picture picture)
         {
-            var image = Image.FromStream(model.Image.InputStream, true, true);
-
-            //picture.X = model.XCoordinates.Value;
-            //picture.Y = model.YCoordinates.Value;
-            //picture.Link = model.Link;
-            //picture.Width = image.Width;
-            //picture.Height = image.Height;
-            //picture.User = User.Identity.Name;
-
-            ImageConverter converter = new ImageConverter();
-            picture.Data = (byte[])converter.ConvertTo(image, typeof(byte[]));
+            picture.X = model.XCoordinates.Value;
+            picture.Y = model.YCoordinates.Value;
+            picture.Link = model.Link;
+            picture.Width = model.Width;
+            picture.Height = model.Height;
+            picture.User = User.Identity.Name;
+            picture.Data = model.BinaryContent;
+            picture.ContentType = model.ContentType;
         }
     }
 }
