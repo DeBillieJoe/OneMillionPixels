@@ -46,10 +46,21 @@ namespace DBManagers
 
         public List<Picture> RetrieveAll()
         {
+            return RetrieveAll(string.Empty);
+        }
+        public List<Picture> RetrieveAll(string user)
+        {
             List<Picture> pictures = new List<Picture>();
 
             var command = this.CreateCommand();
             command.CommandText = @"SELECT ID, X, Y, Width, Height, Link, Data, Username FROM Pictures";
+
+            if (!string.IsNullOrEmpty(user))
+            {
+                command.CommandText += " WHERE Username = @param1";
+                command.Parameters.Add("@param8", SqlDbType.NVarChar).Value = user;
+            }
+
             var reader = command.ExecuteReader();
 
             while (reader.Read())
