@@ -93,6 +93,16 @@ namespace OneMillionPixels.Controllers
             return View(model);
         }
 
+        public ActionResult Manage(ManageMessageId? message)
+        {
+            ViewBag.StatusMessage =
+                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+                : "";
+            ViewBag.ReturnUrl = Url.Action("Manage");
+            return View();
+        }
+
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {
