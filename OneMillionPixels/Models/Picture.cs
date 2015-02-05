@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Models
 {
     public class Picture
@@ -16,5 +11,6 @@ namespace Models
         public string Link { get; set; }
         public byte[] Data { get; set; }
         public string User { get; set; }
+        public string ContentType { get; set; }
     }
 }
