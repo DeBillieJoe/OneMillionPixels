@@ -11,11 +11,11 @@
     @Html.ValidationSummary();
     
     @Html.LabelFor(x => x.XCoordinates)
-    @Html.TextBoxFor(x => x.XCoordinates, new { id = "xCoordinate"})
+    @Html.TextBoxFor(x => x.XCoordinates, new { id = "xCoordinate", @readonly = "readonly"})
     @Html.ValidationMessageFor(x => x.XCoordinates)
 
     @Html.LabelFor(x => x.YCoordinates)
-    @Html.TextBoxFor(x => x.YCoordinates, new { id = "yCoordinate" })
+    @Html.TextBoxFor(x => x.YCoordinates, new { id = "yCoordinate", @readonly = "readonly" })
     @Html.ValidationMessageFor(x => x.YCoordinates)
     
     @Html.LabelFor(x => x.Link) 
@@ -28,13 +28,20 @@
 	{   
         string src = "data:image/png;base64," + Convert.ToBase64String(image.BinaryContent);
         
-		<img src="@src" style="display: none" X="@image.X" Y="@image.Y"/>
+		<img src="@src" style="display: none" X="@image.X" Y="@image.Y" class="preview"/>
 	}
 }
-<canvas id="myCanvas" width="1000" height="1000" style="border: 1px solid #000000;"></canvas>
 
+@{
+    string dragStyles = "width:" + Model.Width + "px; height:" + Model.Height + "px; border: 1px solid black;";
+}
 
-<div id='drag' style='width:100px; height:100px; border: 1px solid black'></div>
+<div id='drag' style="@dragStyles">
+    @{string srcUploaded = "data:image/png;base64," + Convert.ToBase64String(Model.BinaryContent); }
+    <img src="@srcUploaded" />
+</div>
+
+<canvas id="myCanvas" width="1002" height="1002" style="border: 1px solid #000000;"></canvas>
 
 
 <script type="text/javascript">
@@ -47,14 +54,35 @@
     }
 
     function move(e) {
-        var div = $("#drag")[0];
-        div.style.position = 'absolute';
-        div.style.top = e.clientY + 'px';
-        div.style.left = e.clientX + 'px';
+        var div = $("#drag");
+        div[0].style.position = 'absolute';
+        div[0].style.top = e.pageY + 'px';
+        div[0].style.left = e.pageX + 'px';
+
+        setCoordinates(div);
+    }
+
+    function setCoordinates(element) {
+        var canvas = $("#myCanvas");
+        var pos = canvas.position();
+        var width = element.width();
+        var height = element.height();
+        var divPos = element.position();
+
+        if (divPos.top >= pos.top && divPos.top < (pos.top + 1000) - height &&
+            divPos.left >= pos.left && divPos.left < (pos.left + 1000) - width) {
+            divPos = element.position();
+            $("#yCoordinate").val(divPos.top - pos.top);
+            $("#xCoordinate").val(divPos.left - pos.left);
+        }
+        else {
+            $("#yCoordinate").val("");
+            $("#xCoordinate").val("");
+        }
     }
 
     function drawImages() {
-        var images = $("img");
+        var images = $(".preview");
         var ctx = $("#myCanvas")[0].getContext('2d');
         images.each(function () {
             var currentImage = $(this)[0];
@@ -71,20 +99,16 @@
     }
 
     $(function () {
-        $("#drag")[0].addEventListener('mousedown', mouseDown, false);
+        var div = $("#drag")[0];
+        var canvas = $("#myCanvas");
+        var pos = canvas.position();
+
+        div.style.top = pos.top + 'px';
+        div.style.left = pos.left + 'px';
+
+        div.addEventListener('mousedown', mouseDown, false);
         window.addEventListener('mouseup', mouseUp, false);
 
         drawImages();
-
-        //var canvas = $("#myCanvas");
-        //canvas.click(function (e) {
-        //    e.preventDefault();
-        //    var pos = canvas.position();
-        //    var x = (e.pageX - pos.left)/5 | 0;
-        //    var y = (e.pageY - pos.top) / 5 | 0;
-
-        //    $("#yCoordinate").val(y);
-        //    $("#xCoordinate").val(x);
-        //});
     })
 </script>

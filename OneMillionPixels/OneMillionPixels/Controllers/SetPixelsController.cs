@@ -25,11 +25,18 @@ namespace OneMillionPixels.Controllers
         public ActionResult StepTwo(UploadImageStepOne model)
         {
             UploadImageStepTwo stepTwoModel = new UploadImageStepTwo();
-
+            
             ImageManager mngr = new ImageManager();
             var images = mngr.RetrieveAllImages();
 
             mapSavedPicturesToImageBanners(images, stepTwoModel.Images);
+
+            var image = Image.FromStream(model.Image.InputStream, true, true);
+            stepTwoModel.Width = image.Width;
+            stepTwoModel.Height = image.Height;
+
+            ImageConverter converter = new ImageConverter();
+            stepTwoModel.BinaryContent = (byte[])converter.ConvertTo(image, typeof(byte[]));
 
             return View("StepTwo", stepTwoModel); 
         }
