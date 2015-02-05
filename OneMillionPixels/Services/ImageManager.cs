@@ -11,6 +11,14 @@ namespace Services
 {
     public class ImageManager
     {
+        public void Save(Picture image)
+        {
+            using (PictureDBController ctrl = new PictureDBController())
+            {
+                ctrl.Save(image);
+            }
+        }
+
         public void SaveNewImage(Picture image)
         {
             using (PictureDBController ctrl = new PictureDBController())

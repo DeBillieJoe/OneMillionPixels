@@ -10,10 +10,27 @@ namespace DBManagers
 {
     public class PictureDBController : DBControllerBase
     {
-        public PictureDBController() : base()
+        public void Save(Picture obj)
         {
+            if (string.IsNullOrEmpty(obj.User))
+                throw new Exception("You are not logged in.");
 
+            if (string.IsNullOrEmpty(obj.ID))
+                obj.ID = System.Guid.NewGuid().ToString("N");
+
+            var command = this.CreateCommand();
+            command.CommandText = @"UPDATE Pictures SET Data = @param1, Link = @param2 WHERE ID = @param3 AND Username = @param4";
+            command.Parameters.Add("@param1", SqlDbType.Image).Value = obj.Data;
+            command.Parameters.Add("@param2", SqlDbType.NText).Value = obj.Link;
+            command.Parameters.Add("@param3", SqlDbType.NVarChar).Value = obj.ID;
+            command.Parameters.Add("@param4", SqlDbType.NVarChar).Value = obj.User;
+
+            int rowsEffected = command.ExecuteNonQuery();
+
+            if (rowsEffected == 0)
+                throw new Exception("There is no such image owned by you.");
         }
+
         public void SaveNew(Picture obj)
         {
             if (string.IsNullOrEmpty(obj.User))
