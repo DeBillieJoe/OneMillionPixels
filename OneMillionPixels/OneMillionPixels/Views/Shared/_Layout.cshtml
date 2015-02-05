@@ -2,8 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <title>One million pixels</title>
         <meta name="viewport" content="width=device-width" />
 
         @Styles.Render("~/Content/css")
@@ -15,7 +14,7 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                    <p class="site-title">@Html.ActionLink("One million pixels", "Index", "Home")</p>
                 </div>
                 <div class="float-right">
                     <section id="login">
@@ -23,8 +22,11 @@
                     </section>
                     <nav>
                         <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Set pixels", "Index", "SetPixels")</li>
+                            <li/>
+                            @if (Request.IsAuthenticated) {
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Set pixels", "Index", "SetPixels")</li>
+                            }
                         </ul>
                     </nav>
                 </div>
@@ -39,7 +41,7 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                    <p>&copy; @DateTime.Now.Year - One million pixels<br>by Ilia Tobov and Tsvetan Igov</p>
                 </div>
             </div>
         </footer>
