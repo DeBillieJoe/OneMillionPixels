@@ -37,8 +37,9 @@ namespace OneMillionPixels.Filters
                             ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
                         }
                     }
-
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    string connectionString = System.AppDomain.CurrentDomain.BaseDirectory + System.Configuration.ConfigurationManager.AppSettings["DatabasePath"];
+                    connectionString = connectionString.Remove(connectionString.LastIndexOf('.'));
+                    WebSecurity.InitializeDatabaseConnection(connectionString, "UserProfile", "UserId", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

@@ -13,7 +13,7 @@ namespace DBManagers
 
         public DBControllerBase()
         {
-            conn = new SqlCeConnection(System.Configuration.ConfigurationManager.AppSettings["ConnectionString"]);
+            conn = new SqlCeConnection("Data Source=" + System.AppDomain.CurrentDomain.BaseDirectory + System.Configuration.ConfigurationManager.AppSettings["DatabasePath"]);
             conn.Open();
         }
 
