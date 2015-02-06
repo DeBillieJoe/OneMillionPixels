@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<OneMillionPixels.Models.ImageBanner>
+@{
     ViewBag.Title = "10^6 pixels";
 }
 @section featured {
@@ -32,7 +33,7 @@
             var canvasPosition = canvas.position();
             var im = new Image()
             im.style.top = parseInt(currentImage.getAttribute("Y")) + "px";
-            im.style.left = parseInt(currentImage.getAttribute("X")) + "px";
+            im.style.left = parseInt(currentImage.getAttribute("X")) + "px"; 
             im.style.position = "absolute";
             im.src = currentImage.getAttribute("src");
             $(im).appendTo(canvas);
