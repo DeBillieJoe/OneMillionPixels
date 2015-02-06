@@ -13,14 +13,15 @@ namespace OneMillionPixels.Models.Upload
             Images = new List<ImageBanner>();
         }
         [Required(ErrorMessage = "Моля, Х координата")]
-        [Display(Name = "Избор на X координата")]
+        [Display(Name = "X")]
         public int? XCoordinates { get; set; }
 
         [Required(ErrorMessage = "Моля, У координата")]
-        [Display(Name = "Избор на Y координата")]
+        [Display(Name = "Y")]
         public int? YCoordinates { get; set; }
 
         [Required(ErrorMessage = "Моля, изберете линк")]
+        [RegularExpression("^www.[a-zA-Z0-9 .&'-]+.(com|bg|net|edu|org|ru)$", ErrorMessage="Невалиден линк")]
         [Display(Name = "Задайте линк")]
         public string Link { get; set; }
 

@@ -11,11 +11,11 @@
     @Html.ValidationSummary();
     
     @Html.LabelFor(x => x.XCoordinates)
-    @Html.TextBoxFor(x => x.XCoordinates, new { id = "xCoordinate", @readonly = "readonly" })
+    @Html.TextBoxFor(x => x.XCoordinates, new { id = "xCoordinate", @readonly = "readonly", disabled = "disabled" })
     @Html.ValidationMessageFor(x => x.XCoordinates)
 
     @Html.LabelFor(x => x.YCoordinates)
-    @Html.TextBoxFor(x => x.YCoordinates, new { id = "yCoordinate", @readonly = "readonly" })
+    @Html.TextBoxFor(x => x.YCoordinates, new { id = "yCoordinate", @readonly = "readonly", disabled = "disabled" })
     @Html.ValidationMessageFor(x => x.YCoordinates)
     
     @Html.LabelFor(x => x.Link) 
@@ -99,7 +99,7 @@
             im.src = currentImage.getAttribute("src");
             $(im).appendTo(canvas);
             $(im).click(function () {
-                var url = currentImage.getAttribute("href");
+                var url = "http://" + currentImage.getAttribute("href");
                 window.open(url, "_blank");
             });
         });
