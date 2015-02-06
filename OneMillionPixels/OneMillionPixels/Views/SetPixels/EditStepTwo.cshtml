@@ -1,0 +1,26 @@
+﻿@model OneMillionPixels.Models.Edit.EditStepTwo
+@{
+    ViewBag.Title = "Set pixels";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+@using (Html.BeginForm("Save", "SetPixels", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary();
+    
+    @Html.LabelFor(x => x.Image)
+    @Html.TextBoxFor(x => x.Image, new { type = "file", name = "files" })
+    @Html.ValidationMessageFor(x => x.Image)
+    
+    @Html.LabelFor(x => x.Link)
+    @Html.TextBoxFor(x => x.Link)
+    @Html.ValidationMessageFor(x => x.Link)
+    
+    @Html.HiddenFor(x => x.ID)
+
+    <input type="submit" value="Edit" name="upload" id="uploadImage" /> 
+}
+
+  
