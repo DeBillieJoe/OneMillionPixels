@@ -38,7 +38,7 @@
 }
 
 @{
-    string dragStyles = "width:" + Model.Width + "px; height:" + Model.Height + "px; border: 1px solid black;";
+    string dragStyles = "width:" + Model.Width + "px; height:" + Model.Height + "px; border: 1px solid black; z-index: 999;";
 }
 
 <div id='drag' style="@dragStyles">
@@ -46,7 +46,7 @@
     <img src="@srcUploaded" />
 </div>
 
-<div id="myCanvas" height="1000" style="border: 1px solid #000000; width: 1000px; height: 1000px; position: relative;"></div>
+<div id="myCanvas" height="1000" style="border: 1px solid #000000; width: 1000px; height: 1000px; position: relative; z-index: 990"></div>
 
 
 <script type="text/javascript">
