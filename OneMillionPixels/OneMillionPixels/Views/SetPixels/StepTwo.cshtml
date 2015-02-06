@@ -32,7 +32,7 @@
     foreach (var image in Model.Images)
     {
         string src = "data:" + image.ContentType + ";base64," + Convert.ToBase64String(image.BinaryContent);
-        <img src="@src" style="dispaly: none" x="@image.X" y="@image.Y" class="preview" href="@image.Link" />
+        <img src="@src" style="display: none" x="@image.X" y="@image.Y" class="preview" href="@image.Link" />
 
     }
 }
