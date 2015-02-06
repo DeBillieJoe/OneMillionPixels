@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<OneMillionPixels.Models.ImageBanner>
+@{
     ViewBag.Title = "10^6 pixels";
 }
 @section featured {
@@ -13,3 +14,40 @@
         </div>
     </section>
 }
+@{
+    foreach (var image in Model)
+    {
+        string src = "data:" + image.ContentType + ";base64," + Convert.ToBase64String(image.BinaryContent);
+        <img src="@src" style="display: none" x="@image.X" y="@image.Y" class="preview" href="@image.Link" />
+
+    }
+}
+<div id="myCanvas" height="1000" style="border: 1px solid #000000; width: 1000px; height: 1000px; position: relative;"></div>
+
+<script type="text/javascript">
+    function drawImages() {
+        var images = $(".preview");
+        var canvas = $("#myCanvas");
+        images.each(function () {
+            var currentImage = $(this)[0];
+            var canvasPosition = canvas.position();
+            var im = new Image()
+            im.style.top = parseInt(currentImage.getAttribute("Y")) + "px";
+            im.style.left = parseInt(currentImage.getAttribute("X")) + "px"; 
+            im.style.position = "absolute";
+            im.src = currentImage.getAttribute("src");
+            $(im).appendTo(canvas);
+            $(im).click(function () {
+                var url = currentImage.getAttribute("href");
+                window.open(url, "_blank");
+            });
+        });
+        images.each(function () {
+            $(this).remove();
+        });
+    }
+
+    $(function () {
+        drawImages();
+    })
+</script>
