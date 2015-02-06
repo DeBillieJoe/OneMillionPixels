@@ -9,6 +9,8 @@ namespace OneMillionPixels.Models.Edit
     public class EditStepTwo
     {
         public string ID { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         [Required(ErrorMessage = "Моля, изберете линк")]
         [Display(Name = "Избор на линк")]

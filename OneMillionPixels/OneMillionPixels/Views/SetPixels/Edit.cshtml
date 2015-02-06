@@ -7,8 +7,8 @@
     foreach (var image in Model.Images)
     {
         string src = "data:" + image.ContentType + ";base64," + Convert.ToBase64String(image.BinaryContent);
-        <a href="@Url.Action("EditStepTwo", new { id = image.ID})">
-            <img src="@src" x="@image.X" y="@image.Y" class="preview" />
+        <a href="@Url.Action("EditStepTwo", new { id = image.ID, height = image.Height, width = image.Width })">
+            <img src="@src" class="preview" />
         </a>
     }
 } 

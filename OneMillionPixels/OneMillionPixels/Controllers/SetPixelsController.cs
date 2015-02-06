@@ -27,19 +27,25 @@ namespace OneMillionPixels.Controllers
         public ActionResult StepTwo(UploadImageStepOne model)
         {
             UploadImageStepTwo stepTwoModel = new UploadImageStepTwo();
+            Image image;
             try
             {
                 ImageManager mngr = new ImageManager();
                 var images = mngr.RetrieveAllImages();
 
                 mapSavedPicturesToImageBanners(images, stepTwoModel.Images);
+                image = Image.FromStream(model.Image.InputStream, true, true);
+
+                if (image.Width > 1000 || image.Height > 1000)
+                {
+                    throw new Exception("Too large image!");
+                }
             }
             catch (Exception ex)
             {
                 return View("Error", ex);
             }
 
-            var image = Image.FromStream(model.Image.InputStream, true, true);
             stepTwoModel.Width = image.Width;
             stepTwoModel.Height = image.Height;
             stepTwoModel.ContentType = model.Image.ContentType;
@@ -90,10 +96,12 @@ namespace OneMillionPixels.Controllers
             return View(model);
         }
 
-        public ActionResult EditStepTwo(string id)
+        public ActionResult EditStepTwo(string id, int width, int height)
         {
             EditStepTwo model = new EditStepTwo();
             model.ID = id;
+            model.Width = width;
+            model.Height = height;
     
             return View(model);
         }
@@ -107,10 +115,20 @@ namespace OneMillionPixels.Controllers
             {
                 pic.ID = model.ID;
                 pic.Link = model.Link;
-                using (BinaryReader reader = new BinaryReader(model.Image.InputStream))
+                var im = Image.FromStream(model.Image.InputStream);
+
+                if (im.Width > 1000 || im.Height > 1000)
                 {
-                    pic.Data = reader.ReadBytes(model.Image.ContentLength);
+                    throw new Exception("Too large image!");
                 }
+                if (im.Height != model.Height || im.Width != model.Width)
+                {
+                    throw new Exception("The image has to have same width and height as the old one!!");
+                }
+
+                ImageConverter con = new ImageConverter();
+                pic.Data = (byte[])con.ConvertTo(im, typeof(byte[]));
+                
                 pic.ContentType = model.Image.ContentType;
                 pic.User = User.Identity.Name;
                 mngr.Save(pic);
@@ -134,6 +152,8 @@ namespace OneMillionPixels.Controllers
                 banner.Link = image.Link;
                 banner.BinaryContent = image.Data;
                 banner.ContentType = image.ContentType;
+                banner.Width = image.Width;
+                banner.Height = image.Height;
 
                 banners.Add(banner);
             }
