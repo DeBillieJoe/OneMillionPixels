@@ -1,5 +1,4 @@
 ﻿using Models;
-using OneMillionPixels.Database;
 using OneMillionPixels.Models;
 using OneMillionPixels.Models.Edit;
 using OneMillionPixels.Models.Upload;
